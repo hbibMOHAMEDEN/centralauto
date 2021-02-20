@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "centre-auto-hbib": {
+      "hosting": {
+        "pk2-angular": [
+          "centre-auto-hbib"
+        ]
+      }
+    }
+  }
+}

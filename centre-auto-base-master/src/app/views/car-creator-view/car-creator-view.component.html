@@ -1,1 +1,245 @@
-<p>car-creator-view works!</p>
+<div class="wrapper">
+    <div class="section">
+        <div class="container text-center">
+            <h4 class="title">AJOUT D'UNE NOUVELLE VOITURE</h4>
+            <div class="row">
+                <div class="col-8 ml-auto mr-auto text-center pt-2 shadow ">
+                    <form [formGroup]="newCarForm"
+                          (ngSubmit)="onSubmitNewCarForm()"
+                    >
+
+                        <div
+                                *ngIf="errorMsg"
+                                class="alert alert-danger">
+                            {{errorMsg}}
+                        </div>
+                        <div class="row">
+                        <!--   Premier Colonne-->
+                            <div class="col-6 ml-auto mr-auto text-center">
+                                <div class="form-group text-left">
+                                    <label>Marque</label>
+                                    <select class="form-control"
+                                            formControlName="brandId"
+                                            [(ngModel)]="car.brandId"
+                                            #sB
+                                            (change)="getModelsForBrandId(sB.value)">
+                                        <option value="" selected>Choisir</option>
+                                        <option *ngFor=" let brand of brands" [value]="brand.id">{{brand.name}}</option>
+
+                                    </select>
+
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="(newCarForm.controls.brandId.dirty
+                                         || newCarForm.controls.brandId.touched)
+                                         && newCarForm.controls.brandId.invalid
+                                         && newCarForm.controls.brandId.errors.required"
+                                    >
+                                        Merci de choisir  une marque
+                                    </div>
+
+
+                                <label>Nombre de portes</label>
+                                    <select class="form-control"
+                                            formControlName="doorsNb"
+                                            [(ngModel)]="car.doorsNb">
+                                        <option value="0" selected>Choisir</option>
+                                        <option *ngFor=" let nbr of numbers" [value]="nbr">{{nbr}}</option>
+
+                                    </select>
+
+                                    <div class="form-control-feedback text-danger"
+                                     *ngIf="(newCarForm.controls.doorsNb.dirty
+                                         || newCarForm.controls.doorsNb.touched)
+                                         && newCarForm.controls.doorsNb.invalid
+                                         && newCarForm.controls.doorsNb.errors.required"
+                                    >  Merci de renseigner le nombre de portes
+
+                                </div>
+
+                                    <label>Date de mise en circul.</label>
+                                    <input type=text
+                                           class="form-control"
+                                           placeholder="MM/AAAA"
+                                            formControlName="dateFirstRelease"
+                                            [(ngModel)]="car.dateFirstRelease"
+                                    >
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="(newCarForm.controls.dateFirstRelease.dirty
+                                         || newCarForm.controls.dateFirstRelease.touched)
+                                         && newCarForm.controls.dateFirstRelease.invalid"
+                                    >
+                                            <span *ngIf="newCarForm.controls.dateFirstRelease.errors.required">
+                                                Merci de choisir  l'année de mise en circulation
+                                            </span>
+                                            <span *ngIf="newCarForm.controls.dateFirstRelease.errors.pattern">
+                                                Vous devez respecter le format de date MM/YYYY
+                                            </span>
+                                    </div>
+
+                                    <label>Couleur</label>
+                                    <input type=text
+                                           class="form-control"
+                                           placeholder="couleur*"
+                                           formControlName="color"
+                                           [(ngModel)]="car.color"
+                                    >
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="(newCarForm.controls.color.dirty
+                                         || newCarForm.controls.color.touched)
+                                         && newCarForm.controls.color.invalid
+                                         && newCarForm.controls.color.errors.pattern"
+                                    >
+                                        Vous devez choisir une couleur
+                                    </div>
+
+                                    <label>Puissance en cv</label>
+                                    <input  type="number"
+                                            class="form-control"
+                                            placeholder="Puissance en CV"
+                                            formControlName="horsePower"
+                                            [(ngModel)]="car.horsePower">
+                                   <div class="form-control-feedback text-danger"
+                                         *ngIf="(newCarForm.controls.horsePower.dirty
+                                         || newCarForm.controls.horsePower.touched)
+                                         && newCarForm.controls.horsePower.invalid
+                                         && newCarForm.controls.horsePower.errors.required"
+                                    >
+                                        Merci de renseigner le nombre de CV
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--   Fin Premier Colonne-->
+                            <!--   Dexième  Colonne-->
+                            <div class="col-6 ml-auto mr-auto text-center">
+                                <div class="form-group text-left">
+
+                                    <label>Modèle</label>
+                                    <select class="form-control"
+                                            formControlName="modelId"
+                                            [(ngModel)]="car.modelId">
+                                        <option value="" selected>Choisir</option>
+                                        <option *ngFor=" let model of modelsForBrandId" [value]="model.id">{{model.name}}</option>
+                                    </select>
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="(newCarForm.controls.modelId.dirty
+                                     || newCarForm.controls.modelId.touched)
+                                     && newCarForm.controls.modelId.invalid
+                                     && newCarForm.controls.modelId.errors.required"
+                                    >
+                                        Merci de sélectionner un model
+                                    </div>
+
+                                    <label>Boite de vitesse</label>
+                                    <select class="form-control"
+                                            formControlName="gearboxType"
+                                            [(ngModel)]="car.gearboxType">
+                                        <option value="" selected>Choisir</option>
+                                        <option value="mechanic">Mécanique</option>
+                                        <option value="automatic">Automatique</option>
+                                    </select>
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="(newCarForm.controls.gearboxType.dirty
+                                         || newCarForm.controls.gearboxType.touched)
+                                         && newCarForm.controls.gearboxType.invalid
+                                         && newCarForm.controls.gearboxType.errors.required"
+                                    >
+                                        Merci de renseigner le type de boite vitesse
+                                    </div>
+
+                                    <label>Nombre de places</label>
+                                    <select class="form-control"
+                                            formControlName="placesNb"
+                                            [(ngModel)]="car.placesNb">
+                                        <option value="0" selected>Choisir</option>
+                                        <option *ngFor=" let nbr of numbers" [value]="nbr">{{nbr}}</option>
+
+                                    </select>
+
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="(newCarForm.controls.placesNb.dirty
+                                         || newCarForm.controls.placesNb.touched)
+                                         && newCarForm.controls.placesNb.invalid
+                                         && newCarForm.controls.placesNb.errors.required"
+                                    >  Merci de renseigner le nombre de places
+
+                                    </div>
+
+                                    <label>Kilométrage.</label>
+                                    <input type=number
+                                           class="form-control"
+                                           placeholder="Kilométrage*"
+                                           formControlName="mileage"
+                                           [(ngModel)]="car.mileage"
+                                    >
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="(newCarForm.controls.mileage.dirty
+                                         || newCarForm.controls.mileage.touched)
+                                         && newCarForm.controls.mileage.invalid
+                                         && newCarForm.controls.dateFirstRelease.errors.required"
+                                    >
+                                        Merci d'entrer  le kilométrage
+                                    </div>
+
+                                    <label>Type d'énergie</label>
+                                    <select class="form-control"
+                                            formControlName="energyType"
+                                            [(ngModel)]="car.energyType">
+                                        <option value="0" selected>Choisir</option>
+                                        <option *ngFor=" let en of energyTypes" [value]="en">{{en}}</option>
+
+                                    </select>
+
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="(newCarForm.controls.energyType.dirty
+                                         || newCarForm.controls.energyType.touched)
+                                         && newCarForm.controls.energyType.invalid
+                                         && newCarForm.controls.energyType.errors.required"
+                                    >
+                                        Merci de renseigner le type d'énergie
+                                    </div>
+
+                                </div>
+
+                                <!--  Fin Dexieme  Colonne-->
+                            </div>
+
+                                <div class="col-12 mr-auto ml-auto text-center">
+                                    <div class="custom-file">
+                                        <input type="file"
+                                               class="custom-file-input"
+                                               id="imgFile"
+                                                (change)="onFileSelected($event)">
+                                        <label  class="custom-file-label"
+                                                for="imgFile">
+                                            {{fileSelected ? fileSelected.name : "Sélectionner une image"}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                        </div>
+
+
+                        <button class="btn btn-danger btn-block "
+                                [disabled]="newCarForm.invalid || !fileSelected ">AJOUTER
+                        </button>
+
+                    </form>
+
+                    <div class="forgot">
+                        <a routerLink="/dashboard"
+                           class="btn btn-link btn-danger"
+                        >
+                            REVENIR AU DASHBOARD
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

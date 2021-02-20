@@ -1,1 +1,91 @@
-<p>models-editor-view works!</p>
+
+
+<div class="wrapper">
+    <div class="section">
+        <div class="container text-center">
+            <h4 class="title">MODIFICATION D'UN MODEL</h4>
+            <div class="row">
+                <div class="col-8 ml-auto mr-auto text-center shadow">
+                    <form [formGroup] = "editModelForm"
+                          (ngSubmit)="onSubmitEditedModelForm()"
+                    >
+
+                        <div
+                                *ngIf="errorMsg"
+                                class="alert alert-danger">
+                            {{errorMsg}}
+                        </div>
+                        <label>Nom</label>
+                        <div
+                                *ngIf="(editModelForm.controls.name.dirty
+                                || editModelForm.controls.name.touched)
+                                && editModelForm.controls.name.invalid
+                                && editModelForm.controls.name.errors.required"
+                                class="alert alert-danger">
+                            Le nom est obligatoire
+                        </div>
+                        <div class="input-group form-group-no-border">
+                            <div class="input-group-prepend">
+                        <span class="input-group-text">
+                           <i class="nc-icon nc-alert-circle-i"></i>
+                        </span>
+                            </div>
+                            <input type="name"
+                                   class="form-control"
+                                   placeholder="Nom*"
+                                   formControlName="name"
+                                   [(ngModel)]="model.name">
+                        </div>
+
+                        <label>Marque</label>
+                        <div
+                                *ngIf="(editModelForm.controls.brandId.dirty
+                                || editModelForm.controls.brandId.touched)
+                                && editModelForm.controls.brandId.invalid
+                                && editModelForm.controls.brandId.errors.required"
+                                class="alert alert-danger">
+                            Vous devez sélectionner une marque
+                        </div>
+                        <div class="input-group form-group-no-border">
+                            <div class="input-group-prepend">
+                        <span class="input-group-text">
+                           <i class="nc-icon nc-alert-circle-i"></i>
+                        </span>
+                            </div>
+                            <select class="form-control"
+                                    formControlName="brandId"
+                                    [(ngModel)]="model.brandId"
+
+                            >
+                                <option *ngFor="let brand of brands"
+                                        [value]="brand.id">
+                                    {{brand.name}}
+                                </option>
+                            </select>
+                        </div>
+
+
+                        <button class="btn btn-danger btn-block"
+                                [disabled]="editModelForm.invalid" >MODIFIER</button>
+
+
+                    </form>
+
+                    <div class="forgot">
+                        <a routerLink="/models"
+                           class="btn btn-link btn-danger"
+                        >
+                            AUTRES MODELS
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

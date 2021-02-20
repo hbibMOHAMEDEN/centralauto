@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-modal-confirm-delete',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalConfirmDeleteComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(private modal:NgbActiveModal) { }
 
   ngOnInit(): void {
   }

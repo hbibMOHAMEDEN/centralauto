@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg fixed-top " [ngClass]="getTypeHeader()" color-on-scroll="500">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" routerLink="/">Centre'Auto</a>
+            <button class="navbar-toggler navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" (click)="sidebarToggle()">
+                <span class="navbar-toggler-bar"></span>
+                <span class="navbar-toggler-bar"></span>
+                <span class="navbar-toggler-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" >
+                    <a routerLink="dashboard" class="nav-link"><i class="nc-icon nc-sound-wave"></i> Galerie</a>
+                </li>
+                <li class="nav-item" >
+                    <a routerLink="car/new"class="nav-link"><i class="nc-icon nc-simple-add"></i> Voitures</a>
+                </li>
+                <li class="nav-item" >
+                    <a routerLink="brands"class="nav-link"><i class="nc-icon nc-settings"></i> Marques</a>
+                </li>
+                <li class="nav-item" >
+                    <a routerLink="models"class="nav-link"><i class="nc-icon nc-settings"></i> Models</a>
+                </li>
+                <li class="nav-item" *ngIf="! isAnonymous">
+                    <a (click)="onClicklogout()" class="nav-link"><i class="nc-icon nc-button-power"></i> Déconnexion</a>
+                </li>
+                <li class="nav-item" *ngIf="isAnonymous">
+                    <a routerLink="signin" class="nav-link"><i class="nc-icon nc-single-02"></i> Connexion</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>

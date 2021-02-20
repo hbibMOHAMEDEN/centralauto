@@ -1,0 +1,60 @@
+
+
+<div class="wrapper">
+
+    <div class="page-header page-header-xs" data-parallax = "true"
+         style="background-image: url('./assets/img/dashboard.jpg')">
+    </div>
+    <div class="filter"></div>
+</div>
+<div class="section">
+    <div class="container text-center">
+        <h4 class="title">GALERIE</h4>
+        <div class="row">
+            <div class="card-deck justify-content-center shadow">
+                <div   *ngFor="let car of cars"
+                        class="card mb-4"
+                    style="min-width: 30rem; max-height: 30rem;">
+                    <img class="card-img-top" [src]="car.imgPath">
+                    <div class="card-body">
+                        <h5> {{getBrandName(car.brandId)}} {{getModeName(car.modelId)}}</h5>
+                        <div class="row">
+                            <div class="col-6 text-left">
+                                <p class="card-text">
+                                    Type de boite:
+                                    <small class="text-muted">{{car.gearboxType}}</small>
+                                </p>
+                                <p class="card-text">
+                                    Puissance:
+                                    <small class="text-muted">{{car.horsePower}} CV</small>
+                                </p>
+                                <p class="card-text">
+                                    Mise en circu.:
+                                    <small class="text-muted">{{car.dateFirstRelease}}</small>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <div class="float-left">
+                            <a routerLink="/car/edit/{{car.id}}"
+                            class="btn btn-round btn-outline-warning btn-sm" >
+                               <i class="nc-icon nc-simple-delete"></i>
+                            </a>
+                            <button (click)="onClickDeleteCar(car.id, car.imgPath)"
+                            class="btn-round btn-sm btn-outline-danger">
+                            <i class="nc-icon nc-simple-remove"></i>
+                            </button>
+                        </div>
+                        Kilomètrage :
+                        <small class="text-muted">
+                           {{car.mileage}} {{car.mileage > 1 ? 'kms' : 'km'}}
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
